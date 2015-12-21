@@ -19,43 +19,46 @@ public class Music implements Runnable {
 	boolean isPlayed;
 	Clip clip;
 	public static AdvancedPlayer explay;
-Music() throws UnsupportedAudioFileException, IOException, LineUnavailableException
-{
-	
-}
-boolean isPlayed()
-{
-	return isPlayed;
-}
-public void run()
-{
-	while(isPlayed())
-	{
-		 InputStream potok;
-		try {
-			potok = new FileInputStream("2.mp3");
-			AudioDevice auDev = new JavaSoundAudioDevice();
-		 explay = new AdvancedPlayer(potok,auDev);
-		 explay.play(); 
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JavaLayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+	Music() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
 	}
-}
-void start()
-{
-	isPlayed=true;
-	Thread t=new Thread(this);
-	t.start();
+
+	boolean isPlayed() {
+		return isPlayed;
+	}
+
+	public void run() {
+
+		
+				InputStream potok;
+				try {
+					potok = new FileInputStream("2.mp3");
+					AudioDevice auDev = new JavaSoundAudioDevice();
+					explay = new AdvancedPlayer(potok, auDev);
+					explay.play();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JavaLayerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			
+		}
 	
-}
-void stop()
-{
-	isPlayed=false;
-}
+
+
+	void start() {
+		isPlayed = true;
+		Thread t = new Thread(this);
+		t.start();
+
+	}
+
+	void stop() {
+		explay.stop();
+		explay.close();
+	}
 }

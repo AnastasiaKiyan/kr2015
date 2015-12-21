@@ -45,7 +45,6 @@ City()
 		JTabbedPane pane = new JTabbedPane();
 		JScrollPane scroll = new JScrollPane(history);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		 
 		pane.add(scroll,"История");
 		pane.add(places,"Достопримечательности");
 		

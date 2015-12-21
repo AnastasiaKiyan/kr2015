@@ -15,6 +15,8 @@ import javax.swing.JList;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.*;
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class GUI {
 	JSplitPane splitPane;
 	String choose;
 	Start s;
+	Music m;
 	public static AdvancedPlayer explay;
 
 	public static void main(String[] args) {
@@ -62,6 +65,7 @@ public class GUI {
 	}
 
 	private void initialize() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+		 m=new Music();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 781, 536);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,6 +94,41 @@ public class GUI {
 		play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(50, 30, ii.getImage().SCALE_DEFAULT)));
 		play.setSize(50, 30);
 		forMusic.add(play);
+play.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				m.start();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+	
+		});
 
 		ImageIcon ii2 = new ImageIcon("pause.png");
 		JLabel pause = new JLabel();
@@ -114,9 +153,76 @@ public class GUI {
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, forBut, panel);
 		splitPane.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		frame.getContentPane().add(splitPane);
-	
-		Music m=new Music();
-		m.start();
+		pause.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				m.stop();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});
+		stop.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				m.stop();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				try {
