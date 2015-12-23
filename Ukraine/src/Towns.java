@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +12,13 @@ import javax.swing.DefaultListModel;
 
 public class Towns extends DefaultListModel {
 	private File file;
-	private List<String> list = new ArrayList<String>();
+	public List<String> list = new ArrayList<String>();
 
-	Towns() throws IOException {
-		file = new File("towns.txt");
+	Towns(int num) throws IOException {
+		if (num == 1)
+			file = new File("towns.txt");
+		else
+			file = new File("likes.txt");
 		if (file.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line;
@@ -26,12 +31,25 @@ public class Towns extends DefaultListModel {
 				addElement(str);
 
 			}
+			
 		}
 	}
-	boolean findTown(String town)
-	{
-		if (contains(town))
-			return true;
-		return false;
+
+	boolean findTown(String town) {
+		if (town == null || town.isEmpty()) {
+			return false;
+		} else {
+			String str = town.substring(0, 1).toUpperCase() + town.substring(1);
+			if (contains(str))
+				return true;
+			return false;
+		}
+	}
+
+	public void addLike(String like) throws IOException {
+		FileWriter sw = new FileWriter("likes.txt", true);
+		sw.write(like + "\n");
+		sw.close();
+
 	}
 }

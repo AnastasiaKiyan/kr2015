@@ -13,14 +13,14 @@ import javax.swing.JPanel;
 public class Start extends JPanel {
 	Start(String str) {
 		JLabel label = new JLabel(str);
-		label.setFont(new Font("Times New Roman", Font.ITALIC, 68));
+		label.setFont(new Font("Segoe Script", Font.BOLD ,60));
 		add(label);
 	}
 
 	public void paintComponent(Graphics g) {
 		Image im = null;
 		try {
-			im = ImageIO.read(new File("start.jpg"));
+			im = ImageIO.read(new File("fon.jpg"));
 		} catch (IOException e) {
 		}
 		g.drawImage(im, 0, 0, getWidth(), getHeight(), null);
