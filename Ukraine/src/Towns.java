@@ -11,14 +11,19 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 public class Towns extends DefaultListModel {
-	private File file;
+	private File file;int num;
 	public List<String> list = new ArrayList<String>();
 
 	Towns(int num) throws IOException {
+		this.num=num;
 		if (num == 1)
 			file = new File("towns.txt");
-		else
+		if (num == 2)
 			file = new File("likes.txt");
+		if (num == 3)
+			file = new File("townsE.txt");
+			if (num == 4)
+				file = new File("likesE.txt");
 		if (file.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line;
@@ -47,7 +52,11 @@ public class Towns extends DefaultListModel {
 	}
 
 	public void addLike(String like) throws IOException {
-		FileWriter sw = new FileWriter("likes.txt", true);
+		FileWriter sw;
+		if (num==1)
+		 sw = new FileWriter("likes.txt", true);
+		else
+			sw = new FileWriter("likesE.txt", true);
 		sw.write(like + "\n");
 		sw.close();
 

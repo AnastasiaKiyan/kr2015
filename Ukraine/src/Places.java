@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -61,6 +62,8 @@ public class Places extends JPanel {
 						.setIcon(new ImageIcon(ii.getImage().getScaledInstance(300, 200, ii.getImage().SCALE_DEFAULT)));
 				add(imageLabel);
 				button[i] = new JButton("Сохранить информацию в файл");
+				button[i].setMinimumSize(new Dimension(60, 25));
+				button[i].setMaximumSize(new Dimension(100, 50));
 				button[i].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						JFileChooser fc = new JFileChooser();

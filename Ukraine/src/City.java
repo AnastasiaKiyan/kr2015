@@ -3,7 +3,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
@@ -23,19 +25,22 @@ public class City extends JPanel {
 	private Places places;
 	private Gallery gallery;
 	private GUI gui;
+	int num;
+	private String str;
 
 	City() {
 
 	}
 
-	City(String city) throws IOException, UnsupportedAudioFileException, LineUnavailableException, JavaLayerException {
+	City(String city,int num) throws IOException, UnsupportedAudioFileException, LineUnavailableException, JavaLayerException {
 		this.city = city;
+		this.num=num;
 		System.out.println(city);
 		history = new History(city);
 		places = new Places(city);
 		gallery = new Gallery(city);
 		paint();
-		gui = new GUI();
+		gui = new GUI(1);
 
 	}
 
@@ -43,33 +48,92 @@ public class City extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JLabel label = new JLabel(city);
 		label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		label.setFont(new Font("Segoe Script", Font.ITALIC, 30));
+		label.setFont(new Font("Segoe Script", Font.ITALIC, 40));
 		add(label);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		JButton b1 = new JButton("Добавить в избранное");
-		JButton b2 = new JButton("Удалить из избранного");
-		JButton b3 = new JButton("Посмотреть на карте");
-		b3.addActionListener(new ActionListener() {
+		JButton b1,b2,b3,b4 ; 
+		if (num==1 )
+		{
+		 b1 = new JButton("Добавить в избранное");
+		 b2 = new JButton("Удалить из избранного");
+		 b3 = new JButton("Посмотреть на карте");
+		 b4=new JButton("Возможные туры");
+		}
+		else
+		{b1 = new JButton("Add to list of favorites");
+		 b2 = new JButton("Remove from list of favorites");
+		 b3 = new JButton("View on the map");
+		 b4=new JButton("View tours to this country");
+
+			
+		}
+		b4.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				String name=city+"\\tour.txt";
+				File file=new File(name);
+				if (file.exists()) {
+					
+					String line;
+					int c=0;
+					try {BufferedReader reader = new BufferedReader(new FileReader(file));
+						while ((line = reader.readLine()) != null) {
+							str=line;
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				 if (java.awt.Desktop.isDesktopSupported()) {
 			            try {
-			                java.awt.Desktop.getDesktop().browse(new URI("https://www.google.com.ua/maps/place/%D0%9B%D0%BE%D0%BD%D0%B4%D0%BE%D0%BD,+%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%BE%D0%B1%D1%80%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D1%8F/@51.528308,-0.3817765,10z/data=!3m1!4b1!4m2!3m1!1s0x47d8a00baf21de75:0x52963a5addd52a99"));
+			                java.awt.Desktop.getDesktop().browse(new URI(str));
 			            } catch (URISyntaxException ex) {
 			 
 			            } catch (IOException ex) {
-			                System.out.println("Go to http://www.site.com/");
+			                
 			            }
 			        }
 
 			}
+			}
+		});
+		b3.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String name=city+"\\map.txt";
+				File file=new File(name);
+				if (file.exists()) {
+					
+					String line;
+					int c=0;
+					try {BufferedReader reader = new BufferedReader(new FileReader(file));
+						while ((line = reader.readLine()) != null) {
+							str=line;
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				 if (java.awt.Desktop.isDesktopSupported()) {
+			            try {
+			                java.awt.Desktop.getDesktop().browse(new URI(str));
+			            } catch (URISyntaxException ex) {
+			 
+			            } catch (IOException ex) {
+			                
+			            }
+			        }
+
+			}
+			}
 		});
 		panel.add(b1);
 		panel.add(b2);
 		panel.add(b3);
+		panel.add(b4);
 		Towns help=new Towns(2);
 		if (help.findTown(city))
 			b1.setEnabled(false);

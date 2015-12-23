@@ -51,6 +51,7 @@ public class GUI {
 	public Towns city, city1;
 	private JList jlist;
 	private ListOfMusic mm;
+	private int lang;
 	public static AdvancedPlayer explay;
 
 	public static void main(String[] args) {
@@ -67,11 +68,29 @@ public class GUI {
 	}
 
 	public GUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException, JavaLayerException {
-		city1 = new Towns(2);
 		choose = "thf";
 		m = new PlayMusic();
-		initialize();
 
+		Object[] options = { "English", "Русский", };
+		lang = JOptionPane.showOptionDialog(null, "Выберите язык", "A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		initialize();
+		if (lang == 1)
+			city1 = new Towns(2);
+		else
+
+			city1 = new Towns(4);
+
+	}
+
+	public GUI(int num) throws IOException {
+		choose = "thf";
+		m = new PlayMusic();
+		if (lang == 1)
+			city1 = new Towns(2);
+		else
+
+			city1 = new Towns(4);
 	}
 
 	public Towns getCity1() {
@@ -88,16 +107,22 @@ public class GUI {
 		frame.setBounds(100, 100, 781, 536);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-		s = new Start("Столицы мира");
+		if (lang == 1)
+			s = new Start("Столицы мира");
+		else
+			s = new Start("Capitals of the world");
 		s.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		frame.getContentPane().add(s);
 		music = new JList();
-		mm = new ListOfMusic();
+		mm = new ListOfMusic(lang);
 		music.setModel(mm);
 		JScrollPane scroll1 = new JScrollPane(music);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		list = new JList();
-		city = new Towns(1);
+		if (lang == 1)
+			city = new Towns(1);
+		else
+			city = new Towns(3);
 		list.setModel(city);
 		// list.setBackground(Color.BLUE);
 		scroll = new JScrollPane(list);
@@ -106,15 +131,26 @@ public class GUI {
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-		JButton find = new JButton("Найти");
-		JButton likes = new JButton("Избранное");
+		JButton find;
+		JButton likes;
+		if (lang == 1) {
+			find = new JButton("Найти");
+		} else {
+			find = new JButton("Find");
+		}
+		if (lang == 1) {
+			likes = new JButton("Избранное");
+		} else {
+			likes = new JButton("My favorites");
+		}
+
 		find.setMinimumSize(new Dimension(60, 25));
 		find.setMaximumSize(new Dimension(100, 50));
 		likes.setMinimumSize(new Dimension(60, 25));
 		likes.setMaximumSize(new Dimension(100, 50));
 		panel1.add(find);
 		panel1.add(likes);
-		
+
 		panel1.add(scroll1);
 		// panel1.setBackground(Color.YELLOW);
 		panel = new City();
@@ -126,17 +162,21 @@ public class GUI {
 		splitPane.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		frame.getContentPane().add(splitPane);
 
-		
 		find.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String name = JOptionPane.showInputDialog(frame, "Write name of city:");
+				String name;
+				if (lang == 1)
+
+					name = JOptionPane.showInputDialog(frame, "Введите название страны:");
+				else
+					name = JOptionPane.showInputDialog(frame, "Write name of city:");
 				if (city.findTown(name)) {
 
 					try {
 						name = name.substring(0, 1).toUpperCase() + name.substring(1);
-						panel = new City(name);
+						panel = new City(name, lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();
 						s = new Start(name);
@@ -172,10 +212,11 @@ public class GUI {
 				try {
 					if (!choose.equals(list.getSelectedValue().toString())) {
 						panel.removeAll();
-						// s.removeAll();
+						 s.removeAll();
+						 //s=new Start(list.getSelectedValue().toString());
 						choose = list.getSelectedValue().toString();
 						System.out.println(list.getSelectedValue().toString());
-						panel = new City(list.getSelectedValue().toString());
+						panel = new City(list.getSelectedValue().toString(), lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();
 						s = new Start(list.getSelectedValue().toString());
@@ -229,7 +270,7 @@ public class GUI {
 						panel.removeAll();
 						choose = jlist.getSelectedValue().toString();
 						System.out.println(jlist.getSelectedValue().toString());
-						panel = new City(jlist.getSelectedValue().toString());
+						panel = new City(jlist.getSelectedValue().toString(), lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();
 						s = new Start(jlist.getSelectedValue().toString());
