@@ -56,14 +56,13 @@ public class Places extends JPanel {
 				scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 				add(scroll);
 				String image = city + "\\places\\" + i + ".jpg";
-				ImageIcon ii = new ImageIcon(image);
-				JLabel imageLabel = new JLabel();
-				imageLabel
-						.setIcon(new ImageIcon(ii.getImage().getScaledInstance(300, 200, ii.getImage().SCALE_DEFAULT)));
-				add(imageLabel);
+				MyImage m=new MyImage(image);
+				add(m);
+				forButton p=new forButton();
+				//p.setLayout(new BorderLayout());
 				button[i] = new JButton("Сохранить информацию в файл");
-				button[i].setMinimumSize(new Dimension(60, 25));
-				button[i].setMaximumSize(new Dimension(100, 50));
+				button[i].setPreferredSize(new Dimension(300, 150));
+				//button[i].setMaximumSize(new Dimension(100, 50));
 				button[i].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						JFileChooser fc = new JFileChooser();
@@ -85,7 +84,8 @@ public class Places extends JPanel {
 					}
 
 				});
-				add(button[i]);
+				p.add(button[i]);
+				add(p);
 
 			}
 		}
@@ -105,17 +105,27 @@ public class Places extends JPanel {
 class MyImage extends JPanel {
 	private String image;
 	ImageIcon ii;
-
-	MyImage(String image) {
+	Image im ;
+	MyImage(String image) throws IOException {
 		this.image = image;
-
-		ii = new ImageIcon(image);
+		 im = null;
+		 im = ImageIO.read(new File(image));
 	}
 
 	public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(ii.getImage(), 0, 0, getWidth() / 2, getHeight(), this);
+		g.drawImage(im, 0, 0,   getWidth() ,getHeight(), this);
 
 	}
-
+}
+class forButton extends JPanel
+{
+	public void paintComponent(Graphics g) {
+		Image im = null;
+		try {
+			im = ImageIO.read(new File("fon.jpg"));
+		} catch (IOException e) {
+		}
+		g.drawImage(im, 0, 0, getWidth(), getHeight(), null);
+	}
 }

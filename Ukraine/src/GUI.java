@@ -43,7 +43,7 @@ import javax.swing.border.BevelBorder;
 
 public class GUI {
 
-	private JFrame frame;
+	JFrame frame;
 	private JList list, music;
 	private City panel;
 	private JScrollPane scroll;
@@ -107,7 +107,7 @@ public class GUI {
 
 	private void initialize() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 781, 536);
+		frame.setBounds(100, 100, 1000, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		if (lang == 1)
@@ -178,7 +178,7 @@ public class GUI {
 				if (city.findTown(name)) {
 
 					try {
-						name = name.substring(0, 1).toUpperCase() + name.substring(1);
+						name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 						panel = new City(name, lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();

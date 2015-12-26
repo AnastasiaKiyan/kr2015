@@ -11,19 +11,20 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 public class Towns extends DefaultListModel {
-	private File file;int num;
+	private File file;
+	int num;
 	public List<String> list = new ArrayList<String>();
 
 	Towns(int num) throws IOException {
-		this.num=num;
+		this.num = num;
 		if (num == 1)
 			file = new File("towns.txt");
 		if (num == 2)
 			file = new File("likes.txt");
 		if (num == 3)
 			file = new File("townsE.txt");
-			if (num == 4)
-				file = new File("likesE.txt");
+		if (num == 4)
+			file = new File("likesE.txt");
 		if (file.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line;
@@ -36,7 +37,7 @@ public class Towns extends DefaultListModel {
 				addElement(str);
 
 			}
-			
+
 		}
 	}
 
@@ -44,17 +45,17 @@ public class Towns extends DefaultListModel {
 		if (town == null || town.isEmpty()) {
 			return false;
 		} else {
-			String str = town.substring(0, 1).toUpperCase() + town.substring(1);
+			String str = town.substring(0, 1).toUpperCase() + town.substring(1).toLowerCase();
 			if (contains(str))
-				return true;
+				return true;}
 			return false;
-		}
+		
 	}
 
-	public void addLike(String like) throws IOException {
+	public void addLike(String like,int f) throws IOException {
 		FileWriter sw;
-		if (num==1)
-		 sw = new FileWriter("likes.txt", true);
+		if (f == 1)
+			sw = new FileWriter("likes.txt", true);
 		else
 			sw = new FileWriter("likesE.txt", true);
 		sw.write(like + "\n");

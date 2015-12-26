@@ -160,9 +160,15 @@ public class City extends JPanel {
 		panel.add(b3);
 		panel.add(b4);
 		panel.add(b5);
-		Towns help=new Towns(2);
+		Towns help;
+		if (num==1)
+		help=new Towns(2);
+		else
+			help=new Towns(4);
+		System.out.println(help.findTown(city));
 		if (help.findTown(city))
-			b1.setEnabled(false);
+		{
+			b1.setEnabled(false);}
 		else
 			b2.setEnabled(false);
 		add(panel);
@@ -192,8 +198,11 @@ public class City extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					gui.getCity1().addLike(city);
+					gui.getCity1().addLike(city,num);
+					if(num==1)
 					gui.setCity1(new Towns(2));
+					else
+						gui.setCity1(new Towns(4));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -211,12 +220,17 @@ public class City extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					gui.getCity1().list.remove(city);
-					FileWriter sw = new FileWriter("likes.txt", false);
+					FileWriter sw;
+					if (num==1)
+					sw = new FileWriter("likes.txt", false);
+					else
+						sw = new FileWriter("likesE.txt", false);
 					for (String str : gui.city1.list) {
 						sw.write(str + "\n");
 					}
 					sw.close();
-					gui.setCity1(new Towns(2)); 
+					gui.setCity1(new Towns(2));
+					
 					b1.setEnabled(true);
 					b2.setEnabled(false);
 				} catch (IOException e) {
