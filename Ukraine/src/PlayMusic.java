@@ -16,7 +16,7 @@ PlayMusic()
 
 	public void run() {
 		music = new Music(f);
-		music.playSound(name);
+		music.play();
 		System.out.println("zachlo");
 	}
 
@@ -30,6 +30,7 @@ PlayMusic()
 	void stop() {
 		isPlay = false;
 		music.stop();
+		music=null;
 	}
 
 	boolean isPlay() {

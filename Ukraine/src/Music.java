@@ -1,4 +1,5 @@
 import java.io.File
+
 ;
 import java.io.IOException;
 
@@ -16,26 +17,16 @@ public class Music {
 	private Clip clip = null;
 	private FloatControl volumeC = null;
 	private boolean playing = false;
-	
+
 	public Music(File f) {
 		try {
-			AudioInputStream stream = AudioSystem.getAudioInputStream(f);
+			AudioInputStream track = AudioSystem.getAudioInputStream(f);
 			clip = AudioSystem.getClip();
-			clip.open(stream);
-			clip.addLineListener(new LineListener()
-					{
-				public void update(LineEvent ev) {
-					if (ev.getType() == LineEvent.Type.STOP) {
-						playing = false;
-						synchronized(clip) {
-							clip.notify();
-						}
-					}
-				}
-					});
-			volumeC = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+			clip.open(track);
+
+			volumeC = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			released = true;
-		} catch(IOException | UnsupportedAudioFileException | LineUnavailableException exc) {
+		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException exc) {
 			exc.printStackTrace();
 			released = false;
 		}
@@ -49,60 +40,19 @@ public class Music {
 		return playing;
 	}
 
-	
-	public void play(boolean breakOld) {
+	public void play() {
 		if (released) {
-			if (breakOld) {
-				clip.stop();
-				clip.setFramePosition(0);
-				clip.start();
-				playing = true;
-			} else if (!isPlaying()) {
-				clip.setFramePosition(0);
-				clip.start();
-				playing = true;
-			}
+			clip.start();
+			playing = true;
 		}
 	}
 
-	public void play() {
-		play(true);
-	}
-	
 	public void stop() {
 		if (playing) {
+			System.out.println("v stop zachlo");
 			clip.stop();
+			clip.close();
 		}
-	}
-
-	public void setVolume(float x) {
-		if (x<0) x = 0;
-		if (x>1) x = 1;
-		float min = volumeC.getMinimum();
-		float max = volumeC.getMaximum();
-		volumeC.setValue((max-min)*x+min);
-	}
-	public float getVolume() {
-		float v = volumeC.getValue();
-		float min = volumeC.getMinimum();
-		float max = volumeC.getMaximum();
-		return (v-min)/(max-min);
-	}
-
-	public void join() {
-		if (!released) return;
-		synchronized(clip) {
-			try {
-				while (playing) clip.wait();
-			} catch (InterruptedException exc) {}
-		}
-	}
-
-	public  Music playSound(String s) {
-		File f = new File(s);
-		Music music = new Music(f);
-		music.play();
-		return music;
 	}
 
 

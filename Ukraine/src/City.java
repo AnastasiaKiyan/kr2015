@@ -52,20 +52,21 @@ public class City extends JPanel {
 		add(label);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		JButton b1,b2,b3,b4 ; 
+		JButton b1,b2,b3,b4,b5 ; 
 		if (num==1 )
 		{
 		 b1 = new JButton("Добавить в избранное");
 		 b2 = new JButton("Удалить из избранного");
 		 b3 = new JButton("Посмотреть на карте");
 		 b4=new JButton("Возможные туры");
+		 b5=new JButton("Видео");
 		}
 		else
 		{b1 = new JButton("Add to list of favorites");
 		 b2 = new JButton("Remove from list of favorites");
 		 b3 = new JButton("View on the map");
 		 b4=new JButton("View tours to this country");
-
+		 b5=new JButton("Video");
 			
 		}
 		b4.addActionListener(new ActionListener() {
@@ -88,6 +89,7 @@ public class City extends JPanel {
 					}
 				 if (java.awt.Desktop.isDesktopSupported()) {
 			            try {
+			            	
 			                java.awt.Desktop.getDesktop().browse(new URI(str));
 			            } catch (URISyntaxException ex) {
 			 
@@ -95,6 +97,29 @@ public class City extends JPanel {
 			                
 			            }
 			        }
+
+			}
+			}
+		});
+		b5.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String name=city+"\\tour.txt";
+				File file=new File(name);
+				if (file.exists()) {
+					
+					String line;
+					int c=0;
+					try {BufferedReader reader = new BufferedReader(new FileReader(file));
+						while ((line = reader.readLine()) != null) {
+							str=line;
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				 VideoAndMap v=new VideoAndMap(name);
 
 			}
 			}
@@ -134,6 +159,7 @@ public class City extends JPanel {
 		panel.add(b2);
 		panel.add(b3);
 		panel.add(b4);
+		panel.add(b5);
 		Towns help=new Towns(2);
 		if (help.findTown(city))
 			b1.setEnabled(false);
@@ -141,17 +167,26 @@ public class City extends JPanel {
 			b2.setEnabled(false);
 		add(panel);
 		JTabbedPane pane = new JTabbedPane();
+		
 		JScrollPane scroll = new JScrollPane(history);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pane.add(scroll, "О городе");
 		JScrollPane scroll2 = new JScrollPane(places);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pane.add(scroll2, "Достопримечательности");
-
 		JScrollPane scroll1 = new JScrollPane(gallery);
 		scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		if (num==1){
+		pane.add(scroll, "О городе");
+		pane.add(scroll2, "Достопримечательности");	
 		pane.add(scroll1, "Галерея");
 		add(pane);
+		}
+		else
+		{
+			pane.add(scroll, "About city");
+			pane.add(scroll2, "Sights");	
+			pane.add(scroll1, "Gallery");
+			add(pane);
+		}
 		b1.addActionListener(new ActionListener() {
 
 			@Override

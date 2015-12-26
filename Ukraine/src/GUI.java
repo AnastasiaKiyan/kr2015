@@ -35,6 +35,9 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
+
+import chrriis.dj.nativeswing.swtimpl.NativeInterface;
+
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 
@@ -169,9 +172,9 @@ public class GUI {
 				String name;
 				if (lang == 1)
 
-					name = JOptionPane.showInputDialog(frame, "Введите название страны:");
+					name = JOptionPane.showInputDialog(frame, "Введите название города:");
 				else
-					name = JOptionPane.showInputDialog(frame, "Write name of city:");
+					name = JOptionPane.showInputDialog(frame, "Write name of the city:");
 				if (city.findTown(name)) {
 
 					try {
@@ -188,7 +191,11 @@ public class GUI {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "This city wasn't found");
+					if (lang == 1)
+						JOptionPane.showMessageDialog(null, "Город отсутствует");
+					
+					else
+						JOptionPane.showMessageDialog(null, "This city wasn't found");
 				}
 
 			}
@@ -212,16 +219,15 @@ public class GUI {
 				try {
 					if (!choose.equals(list.getSelectedValue().toString())) {
 						panel.removeAll();
-						 s.removeAll();
-						 //s=new Start(list.getSelectedValue().toString());
+						 
+						s.removeAll();
 						choose = list.getSelectedValue().toString();
 						System.out.println(list.getSelectedValue().toString());
 						panel = new City(list.getSelectedValue().toString(), lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();
 						s = new Start(list.getSelectedValue().toString());
-						frame.validate();
-
+						
 					} else {
 
 					}
@@ -239,8 +245,8 @@ public class GUI {
 					choose = music.getSelectedValue().toString();
 					int num = music.getSelectedIndex();
 					if (m.isPlay()) {
+						System.out.println("proverka");
 						m.stop();
-						m = null;
 					}
 					m = new PlayMusic(Integer.toString(num + 1));
 					m.start();
@@ -274,7 +280,7 @@ public class GUI {
 						splitPane.setRightComponent(panel);
 						frame.validate();
 						s = new Start(jlist.getSelectedValue().toString());
-						frame.validate();
+						frame.getContentPane().validate();
 
 					} else {
 
