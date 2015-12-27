@@ -33,15 +33,16 @@ PlayMusic()
 	{
 		return isPause;
 	}
-	public void pause()
+	public void pause() throws InterruptedException
 	{if(!isPause)
 	{
 		isPause=true;
 		music.pause();
+		this.wait();
 	}}
 	public void resume()
 	{if(isPause)
-	{
+	{this.notify();
 		isPause=false;
 		music.resume();
 	}}

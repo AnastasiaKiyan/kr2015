@@ -57,7 +57,7 @@ public class Places extends JPanel {
 				String image = city + "\\places\\" + i + ".jpg";
 				MyImage m = new MyImage(image);
 				add(m);
-				forButton p = new forButton();
+				MyImage p = new MyImage("fon.jpg");
 				button[i - 1][j] = new JButton("Сохранить информацию в файл");
 				button[i - 1][j].setPreferredSize(new Dimension(300, 150));
 				button[i - 1][j].addActionListener(new ActionListener() {
@@ -132,13 +132,4 @@ class MyImage extends JPanel {
 	}
 }
 
-class forButton extends JPanel {
-	public void paintComponent(Graphics g) {
-		Image im = null;
-		try {
-			im = ImageIO.read(new File("fon.jpg"));
-		} catch (IOException e) {
-		}
-		g.drawImage(im, 0, 0, getWidth(), getHeight(), null);
-	}
-}
+

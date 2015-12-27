@@ -1,5 +1,6 @@
 import java.io.File
 
+
 ;
 import java.io.IOException;
 
@@ -12,8 +13,6 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import javazoom.jl.decoder.JavaLayerException;
-
 public class Music {
 	private boolean released = false;
 	public Clip clip = null;
@@ -21,11 +20,8 @@ public class Music {
 	private boolean playing = false;
 	private boolean isPause;
 	private long time;
-	private GUI gui;
-
 	public Music(File f) {
 		try {
-			GUI gui = new GUI(1);
 			AudioInputStream track = AudioSystem.getAudioInputStream(f);
 			clip = AudioSystem.getClip();
 			clip.open(track);

@@ -25,6 +25,10 @@ public class Towns extends DefaultListModel {
 			file = new File("townsE.txt");
 		if (num == 4)
 			file = new File("likesE.txt");
+		openInfo();
+	}
+	public void openInfo() throws IOException
+	{
 		if (file.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line;

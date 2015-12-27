@@ -1,9 +1,7 @@
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import javazoom.jl.player.advanced.*;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.*;
 import javax.swing.JFrame;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
@@ -140,12 +138,12 @@ public class GUI {
 		if (lang == 1) {
 			find = new JButton("Найти");
 		} else {
-			find = new JButton("Find");
+			find = new JButton("find");
 		}
 		if (lang == 1) {
 			likes = new JButton("Избранное");
 		} else {
-			likes = new JButton("My favorites");
+			likes = new JButton("favorites");
 		}
 
 		find.setMinimumSize(new Dimension(60, 25));
@@ -197,7 +195,12 @@ public class GUI {
 					isPress = false;
 					ImageIcon ii = new ImageIcon("play.png");
 					play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
-					m.pause();
+					try {
+						m.pause();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
@@ -235,8 +238,13 @@ public class GUI {
 						frame.validate();
 						s = new Start(name);
 						frame.validate();
-					} catch (IOException | UnsupportedAudioFileException | LineUnavailableException
-							| JavaLayerException e) {
+					} catch (IOException  e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (UnsupportedAudioFileException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (LineUnavailableException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -280,8 +288,13 @@ public class GUI {
 					} else {
 
 					}
-				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException
-						| JavaLayerException e1) {
+				} catch (IOException  e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -325,6 +338,7 @@ public class GUI {
 		forDia p = new forDia();
 		dialog.getContentPane().add(p);
 		jlist = new JList(city1);
+		jlist.setFont(new Font("Segoe Script", Font.PLAIN, 18));
 		jlist.setOpaque(false);
 		p.add(jlist);
 		dialog.setVisible(true);
@@ -345,8 +359,13 @@ public class GUI {
 					} else {
 
 					}
-				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException
-						| JavaLayerException e1) {
+				} catch (IOException  e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

@@ -1,4 +1,5 @@
 import java.awt.Font;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
-import javazoom.jl.decoder.JavaLayerException;
 
 public class City extends JPanel {
 	private String city;
@@ -32,7 +32,7 @@ public class City extends JPanel {
 
 	}
 
-	City(String city,int num) throws IOException, UnsupportedAudioFileException, LineUnavailableException, JavaLayerException {
+	City(String city,int num) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		this.city = city;
 		this.num=num;
 		System.out.println(city);
@@ -56,10 +56,10 @@ public class City extends JPanel {
 		 b5=new JButton("Видео");
 		}
 		else
-		{b1 = new JButton("Add to list of favorites");
-		 b2 = new JButton("Remove from list of favorites");
+		{b1 = new JButton("Add to favorites");
+		 b2 = new JButton("Remove from favorites");
 		 b3 = new JButton("View on the map");
-		 b4=new JButton("View tours to this country");
+		 b4=new JButton("View tours");
 		 b5=new JButton("Video");
 			
 		}

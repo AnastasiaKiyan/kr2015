@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -13,6 +14,9 @@ public class ListOfMusic extends DefaultListModel {
 		file = new File("musics.txt");
 		else
 			file = new File("musicsE.txt");
+		openList();
+	}
+	public void openList() throws IOException{
 		if (file.exists()) {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String line;
