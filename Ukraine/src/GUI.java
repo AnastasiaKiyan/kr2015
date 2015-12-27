@@ -44,18 +44,19 @@ import javax.swing.border.BevelBorder;
 public class GUI {
 
 	JFrame frame;
-	private JList list, music;
+	public JList list, music;
 	private City panel;
 	private JScrollPane scroll;
 	private JSplitPane splitPane;
 	private String choose;
 	private Start s;
 	private PlayMusic m;
-	public Towns city, city1;
+	public Towns city;
+	public static Towns city1;
 	private JList jlist;
 	private ListOfMusic mm;
 	private int lang;
-	public static AdvancedPlayer explay;
+	private boolean isPress;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,7 +71,7 @@ public class GUI {
 		});
 	}
 
-	public GUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException, JavaLayerException {
+	public GUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		choose = "thf";
 		m = new PlayMusic();
 
@@ -96,11 +97,11 @@ public class GUI {
 			city1 = new Towns(4);
 	}
 
-	public Towns getCity1() {
+	public static Towns getCity1() {
 		return city1;
 	}
 
-	public void setCity1(Towns t) {
+	public static void setCity1(Towns t) {
 		city1 = t;
 
 	}
@@ -164,7 +165,57 @@ public class GUI {
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, forBut, panel);
 		splitPane.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		frame.getContentPane().add(splitPane);
+		JPanel forMusic = new JPanel();
+		ImageIcon ii = new ImageIcon("play.png");
+		JButton play = new JButton();
+		find.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		likes.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
+		ImageIcon ii1 = new ImageIcon("stop.png");
+		JButton stop = new JButton();
 
+		stop.setIcon(new ImageIcon(ii1.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
+		forMusic.add(play);
+		forMusic.add(stop);
+		panel1.add(forMusic);
+		play.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (!isPress) {
+					System.out.println("s ckikle");
+					ImageIcon ii = new ImageIcon("pause.png");
+					play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
+					if (!m.isPause()) {
+						choose = "dhfgh";
+						music.setSelectedIndex(0);
+						System.out.println("s ckikle!");
+					} else
+						m.resume();
+					isPress = true;
+				} else {
+					isPress = false;
+					ImageIcon ii = new ImageIcon("play.png");
+					play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
+					m.pause();
+				}
+			}
+		});
+		stop.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (m.isPlay()) {
+					ImageIcon ii = new ImageIcon("play.png");
+					play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
+					System.out.println("proverka");
+					m.stop();
+					isPress = false;
+					music.clearSelection();
+				}
+
+			}
+		});
 		find.addActionListener(new ActionListener() {
 
 			@Override
@@ -193,7 +244,7 @@ public class GUI {
 				} else {
 					if (lang == 1)
 						JOptionPane.showMessageDialog(null, "Город отсутствует");
-					
+
 					else
 						JOptionPane.showMessageDialog(null, "This city wasn't found");
 				}
@@ -219,15 +270,13 @@ public class GUI {
 				try {
 					if (!choose.equals(list.getSelectedValue().toString())) {
 						panel.removeAll();
-						 
-						s.removeAll();
 						choose = list.getSelectedValue().toString();
 						System.out.println(list.getSelectedValue().toString());
 						panel = new City(list.getSelectedValue().toString(), lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();
-						s = new Start(list.getSelectedValue().toString());
-						
+						s.setName(list.getSelectedValue().toString());
+
 					} else {
 
 					}
@@ -241,18 +290,29 @@ public class GUI {
 		});
 		music.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				if (!choose.equals(music.getSelectedValue().toString())) {
-					choose = music.getSelectedValue().toString();
-					int num = music.getSelectedIndex();
-					if (m.isPlay()) {
-						System.out.println("proverka");
-						m.stop();
-					}
-					m = new PlayMusic(Integer.toString(num + 1));
-					m.start();
-					System.out.println(Integer.toString(num + 1));
-				} else {
+				if (!music.isSelectionEmpty()) {
+					if (!choose.equals(music.getSelectedValue().toString())) {
+						choose = music.getSelectedValue().toString();
+						int num = music.getSelectedIndex();
+						if (m.isPlay()) {
+							System.out.println("proverka");
+							m.stop();
+						}
+						try {
+							m = new PlayMusic(Integer.toString(num + 1));
+							m.start();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						ImageIcon ii = new ImageIcon("pause.png");
+						play.setIcon(new ImageIcon(ii.getImage().getScaledInstance(25, 20, ii.getImage().SCALE_DEFAULT)));
+						isPress=true;
+						System.out.println(Integer.toString(num + 1));
+					} else {
 
+					}
 				}
 			}
 
@@ -279,7 +339,7 @@ public class GUI {
 						panel = new City(jlist.getSelectedValue().toString(), lang);
 						splitPane.setRightComponent(panel);
 						frame.validate();
-						s = new Start(jlist.getSelectedValue().toString());
+						s.setName(list.getSelectedValue().toString());
 						frame.getContentPane().validate();
 
 					} else {

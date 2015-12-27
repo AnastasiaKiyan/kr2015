@@ -12,20 +12,26 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import javazoom.jl.decoder.JavaLayerException;
+
 public class Music {
 	private boolean released = false;
-	private Clip clip = null;
+	public Clip clip = null;
 	private FloatControl volumeC = null;
 	private boolean playing = false;
+	private boolean isPause;
+	private long time;
+	private GUI gui;
 
 	public Music(File f) {
 		try {
+			GUI gui = new GUI(1);
 			AudioInputStream track = AudioSystem.getAudioInputStream(f);
 			clip = AudioSystem.getClip();
 			clip.open(track);
-
 			volumeC = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			released = true;
+		
 		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException exc) {
 			exc.printStackTrace();
 			released = false;
@@ -36,8 +42,30 @@ public class Music {
 		return released;
 	}
 
+	public boolean isPause() {
+		return released;
+	}
+
 	public boolean isPlaying() {
 		return playing;
+	}
+
+	public void pause() {
+		if (!isPause) {
+			isPause = true;
+			time = clip.getMicrosecondPosition();
+			clip.stop();
+		}
+	}
+
+	public void resume() {
+		if (isPause) {
+			isPause = false;
+			clip.setMicrosecondPosition(time);
+			clip.start();
+
+		}
+
 	}
 
 	public void play() {
@@ -51,9 +79,9 @@ public class Music {
 		if (playing) {
 			System.out.println("v stop zachlo");
 			clip.stop();
+			isPause = false;
 			clip.close();
 		}
 	}
-
 
 }

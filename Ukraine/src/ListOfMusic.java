@@ -20,10 +20,6 @@ public class ListOfMusic extends DefaultListModel {
 			while ((line = reader.readLine()) != null) {
 				addElement(line);
 			}
-			if (lang==1)
-			addElement("ÎÑÒÀÍÎÂÈÒÜ");
-			else
-				addElement("STOP MUSIC");
 
 		}
 	}

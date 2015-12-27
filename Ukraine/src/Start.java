@@ -12,16 +12,18 @@ import javax.swing.JPanel;
 
 public class Start extends JPanel {
 	private String name;
+	JLabel label;
 	Start(String str) {
 		this.name=str;
-		JLabel label = new JLabel(name);
+		label = new JLabel(name);
 		label.setFont(new Font("Segoe Script", Font.BOLD ,60));
 		add(label);
 		repaint();
 	}
 public void setName(String name)
 {
-	this.name=name;
+	label.setText(name);
+	repaint();
 }
 	public void paintComponent(Graphics g) {
 		Image im = null;

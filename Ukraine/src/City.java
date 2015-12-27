@@ -40,16 +40,10 @@ public class City extends JPanel {
 		places = new Places(city);
 		gallery = new Gallery(city);
 		paint();
-		gui = new GUI(1);
-
 	}
 
 	void paint() throws IOException {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JLabel label = new JLabel(city);
-		label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		label.setFont(new Font("Segoe Script", Font.ITALIC, 40));
-		add(label);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		JButton b1,b2,b3,b4,b5 ; 
@@ -105,7 +99,7 @@ public class City extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String name=city+"\\tour.txt";
+				String name=city+"\\video.txt";
 				File file=new File(name);
 				if (file.exists()) {
 					
@@ -119,7 +113,11 @@ public class City extends JPanel {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				 VideoAndMap v=new VideoAndMap(name);
+					String []mas=str.split("=");
+					System.out.println(mas[0]);
+					System.out.println(mas[1]);
+					str="https://www.youtube.com/v/"+mas[1]+"?fs=1";
+				 VideoAndMap v=new VideoAndMap(str);
 
 			}
 			}
@@ -200,9 +198,9 @@ public class City extends JPanel {
 				try {
 					gui.getCity1().addLike(city,num);
 					if(num==1)
-					gui.setCity1(new Towns(2));
+						gui.setCity1(new Towns(2));
 					else
-						gui.setCity1(new Towns(4));
+					    gui.setCity1(new Towns(4));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -229,8 +227,10 @@ public class City extends JPanel {
 						sw.write(str + "\n");
 					}
 					sw.close();
+					if (num==1)
 					gui.setCity1(new Towns(2));
-					
+					else
+						gui.setCity1(new Towns(4));	
 					b1.setEnabled(true);
 					b2.setEnabled(false);
 				} catch (IOException e) {

@@ -15,6 +15,7 @@ public class VideoAndMap {
 	static JFrame frame;
 
 	VideoAndMap(String name) {
+
 		NativeInterface.open();
 		frame = new JFrame();
 		frame.addWindowListener(new WindowListener() {
@@ -22,13 +23,11 @@ public class VideoAndMap {
 			@Override
 			public void windowActivated(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -36,31 +35,26 @@ public class VideoAndMap {
 				// TODO Auto-generated method stub
 				NativeInterface.close();
 				frame.dispose();
-
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowIconified(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowOpened(WindowEvent arg0) {
 				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -82,5 +76,4 @@ public class VideoAndMap {
 		System.out.println("4");
 
 	}
-
 }

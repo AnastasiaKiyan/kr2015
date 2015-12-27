@@ -35,10 +35,11 @@ public class Towns extends DefaultListModel {
 			list.sort(null);
 			for (String str : list) {
 				addElement(str);
-
+				reader.close();
 			}
 
 		}
+		
 	}
 
 	boolean findTown(String town) {
