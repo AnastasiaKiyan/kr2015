@@ -38,11 +38,11 @@ PlayMusic()
 	{
 		isPause=true;
 		music.pause();
-		this.wait();
+		
 	}}
 	public void resume()
 	{if(isPause)
-	{this.notify();
+	{
 		isPause=false;
 		music.resume();
 	}}
